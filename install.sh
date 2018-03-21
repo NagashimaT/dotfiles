@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DOT_DIRECTORY='dotfiles'
+DOT_DIRECTORY=${HOME}/dotfiles
 
 cd ${DOT_DIRECTORY}
 for f in .??*
