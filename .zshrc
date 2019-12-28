@@ -3,14 +3,14 @@ export LANG=ja_JP.UTF-8
 export LC_TIME=C
 export EDITOR=vim
 
-setopt print_eight_bit        # Enable Japanese file name
-
+bindkey -e 
 set bell-style none; setopt nobeep; setopt nolistbeep  # No beep
+setopt print_eight_bit        # Enable Japanese file name
 
 # History
 export HISTFILE=${HOME}/.zsh-history
-export HISTSIZE=10000         # Number of saved history on memory
-export SAVEHIST=100000        # Number of saved history
+export HISTSIZE=1000000         # Number of saved history on memory
+export SAVEHIST=1000000         # Number of saved history
 
 setopt hist_ignore_dups       # Ignore duplicated history
 setopt hist_ignore_space      # Ignore command starts with white spaces
@@ -27,7 +27,7 @@ alias le='less'
 
 #ls
 if [ $(uname) = 'Darwin' ]; then
-  export LSCOLORS=gxfxcxdxbxegedabagacad
+  export LSCOLORS=Cxfxcxdxbxegedabagacad
   alias ls='ls -G'
   alias la='ls -a'
   alias ll='ls -alhT'
@@ -40,9 +40,26 @@ else
   alias ll='ls -alh'
 fi
 
+# History search with peco
+if which peco &> /dev/null; then
+  function peco-select-history {
+    BUFFER=`history -n -r 1 | peco --query "$LBUFFER"`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+  }
+  zle -N peco-select-history
+  bindkey '^r' peco-select-history
+fi
+
 # zsh-syntax-highlighting
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    ZSH_HIGHLIGHT_STYLES[alias]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[command]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[builtin]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[function]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
 fi
 
 # Completion
@@ -56,13 +73,27 @@ setopt list_types             # Show kinds of file using marks
 setopt magic_equal_subst      # Even option args are complemented
 setopt complete_aliases       # Expand aliases before completing
 
+# Git status
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:*' formats "%{${fg_bold[green]}%}[%b]"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () { vcs_info }
+
 # Prompt color
 autoload -U colors; colors
 
-PROMPT="%{${fg[cyan]}%}%n: %{${fg[cyan]}%}%c %{${fg[magenta]}%}%# %{${reset_color}%}"
-PROMPT2="%{${fg[magenta]}%} %_ > %{${reset_color}%}"
-RPROMPT="%{${fg[cyan]}%}[%~]%{${reset_color}%}"
+if [ ${SSH_CLIENT:-undefined} = "undefined" ] && [ ${SSH_CONECTION:-undefined} = "undefined" ]; then
+    REMOTE_PROMPT=""
+  else
+    REMOTE_PROMPT="%F{red}[REMOTE]%f "
+fi
+
+PROMPT="${REMOTE_PROMPT}%{${fg_bold[green]}%}%n: %{${fg_bold[green]}%}%c %{${fg_bold[green]}%}%# "
+PROMPT2="%{${fg_bold[green]}%} %_ > %{${reset_color}%}"
+RPROMPT='${vcs_info_msg_0_}'
 SPROMPT="%{${fg[red]}%}correct: %R -> %r ? [n,y,a,e] %{${reset_color}%}"
+
 
 #pyenv
 if [ -e ~/.pyenv ]; then

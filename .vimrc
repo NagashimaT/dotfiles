@@ -34,7 +34,15 @@ set smartcase                      " 大文字が含まれる場合は大文字�
 set wrapscan                       " 検索がファイル末尾まで進んだら先頭に戻る
 set incsearch                      " インクリメンタルサーチ
 set hlsearch                       " 検索結果をハイライト表示
-nnoremap <Esc><Esc> :nohlsearch<CR><ESC> " Escの2回押しでハイライト消去
+nnoremap <Esc><Esc> :nohlsearch<CR><ESC> 
+
+" キーバインド
+inoremap <C-a> <C-o>^
+inoremap <C-e> <C-o>$
+
+" visulaモードでインデント調整後に選択範囲を開放しない
+vnoremap > >gv
+vnoremap < <gv
 
 " その他
 set clipboard=unnamed,unnameplus
