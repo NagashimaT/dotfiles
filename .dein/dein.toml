@@ -1,0 +1,29 @@
+#--------------------------------------------------------------#
+##        dein.toml                                           ##
+#--------------------------------------------------------------#
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+  let NERDTreeShowHidden=1
+  nnoremap <silent><C-a> :NERDTreeFind<CR>:vertical res 30<CR>
+'''
+
+# コメントアウト
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+hook_add = '''
+  vnoremap ? :'<,'>TComment<CR>
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+depends = 'vim-airline'
+hook_add = '''
+    let g:airline_theme = 'onedark'
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#fnamemod = ':t'
+'''

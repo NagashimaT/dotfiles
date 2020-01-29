@@ -30,7 +30,7 @@ if [ $(uname) = 'Darwin' ]; then
   export LSCOLORS=Cxfxcxdxbxegedabagacad
   alias ls='ls -G'
   alias la='ls -a'
-  alias ll='ls -alhT'
+  alias ll='ls -alh'
 else
   if [ -e ~/.colorrc ]; then
     eval `dircolors ~/.colorrc`
