@@ -40,7 +40,7 @@ else
   alias ll='ls -alh'
 fi
 
-# History search with peco
+# peco
 if which peco &> /dev/null; then
   function peco-select-history {
     BUFFER=`history -n -r 1 | peco --query "$LBUFFER"`
@@ -49,6 +49,13 @@ if which peco &> /dev/null; then
   }
   zle -N peco-select-history
   bindkey '^r' peco-select-history
+fi
+
+# diff
+if which colordiff &> /dev/null; then
+  alias diff='colordiff -u'
+else
+  alias diff='diff -u'
 fi
 
 # zsh-syntax-highlighting
