@@ -24,10 +24,19 @@ alias c='clear'
 alias t='tmux'
 alias vi='vim'
 alias le='less'
+alias ga='git add'
+alias gb='git branch'
+alias gl='git log'
+alias gch='git checkout'
+alias gst='git status'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gpull='git pull'
+alias gpush='git push'
 
 #ls
 if [ $(uname) = 'Darwin' ]; then
-  export LSCOLORS=Cxfxcxdxbxegedabagacad
+  export LSCOLORS=gxfxcxdxbxegedabagacad
   alias ls='ls -G'
   alias la='ls -a'
   alias ll='ls -alh'
@@ -93,19 +102,19 @@ precmd () { vcs_info }
 # Prompt color
 autoload -U colors; colors
 
+PROMPT="${REMOTE_PROMPT}%{${fg_bold[green]}%}%n: %{${fg_bold[green]}%}%c %{${fg_bold[green]}%}%# "
+PROMPT2="%{${fg_bold[green]}%} %_ > %{${reset_color}%}"
+RPROMPT='${vcs_info_msg_0_}'
+SPROMPT="%{${fg[red]}%}correct: %R -> %r ? [n,y,a,e] %{${reset_color}%}"
+
 if [ ${SSH_CLIENT:-undefined} = "undefined" ] && [ ${SSH_CONECTION:-undefined} = "undefined" ]; then
     REMOTE_PROMPT=""
   else
     REMOTE_PROMPT="%F{red}[REMOTE]%f "
 fi
 
-PROMPT="${REMOTE_PROMPT}%{${fg_bold[green]}%}%n: %{${fg_bold[green]}%}%c %{${fg_bold[green]}%}%# "
-PROMPT2="%{${fg_bold[green]}%} %_ > %{${reset_color}%}"
-RPROMPT='${vcs_info_msg_0_}'
-SPROMPT="%{${fg[red]}%}correct: %R -> %r ? [n,y,a,e] %{${reset_color}%}"
-
-
-#pyenv
-if [ -e ~/.pyenv ]; then
-  eval "$(pyenv init -)"
+# asdf
+if [ -e /usr/local/opt/asdf/asdf.sh ]; then
+  # Do not use `. $(brew --prefix asdf)/asdf.sh` due to performance issues.
+  . /usr/local/opt/asdf/asdf.sh
 fi

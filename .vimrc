@@ -54,8 +54,4 @@ vnoremap < <gv
 
 " ------------------------------------------------------------
 
-" その他
-set clipboard=unnamed,unnameplus
-set mouse=a
-
 
