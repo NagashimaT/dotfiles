@@ -36,7 +36,7 @@ alias gpush='git push'
 
 #ls
 if [ $(uname) = 'Darwin' ]; then
-  export LSCOLORS=Cxfxcxdxbxegedabagacad
+  export LSCOLORS=gxfxcxdxbxegedabagacad
   alias ls='ls -G'
   alias la='ls -a'
   alias ll='ls -alh'
@@ -73,17 +73,21 @@ export LESS='-iMR'
 # zsh-syntax-highlighting
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    ZSH_HIGHLIGHT_STYLES[alias]=fg=green,bold
-    ZSH_HIGHLIGHT_STYLES[command]=fg=green,bold
-    ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,bold
-    ZSH_HIGHLIGHT_STYLES[builtin]=fg=green,bold
-    ZSH_HIGHLIGHT_STYLES[function]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[alias]=fg=green
+    ZSH_HIGHLIGHT_STYLES[command]=fg=green
+    ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
+    ZSH_HIGHLIGHT_STYLES[builtin]=fg=green
+    ZSH_HIGHLIGHT_STYLES[function]=fg=green
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=magenta
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=magenta
+	  ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
+	  ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
     ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
 fi
 
 # enable auto-suggestions based on the history
 if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
@@ -106,15 +110,15 @@ setopt complete_aliases       # Expand aliases before completing
 # Git status
 autoload -Uz vcs_info
 setopt prompt_subst
-zstyle ':vcs_info:*' formats "%{${fg_bold[green]}%}[%b]"
+zstyle ':vcs_info:*' formats "%{${fg[green]}%}[%b]"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 
 # Prompt color
 autoload -U colors; colors
 
-PROMPT="${REMOTE_PROMPT}%{${fg_bold[green]}%}%n: %{${fg_bold[green]}%}%c %{${fg_bold[green]}%}%# "
-PROMPT2="%{${fg_bold[green]}%} %_ > %{${reset_color}%}"
+PROMPT="${REMOTE_PROMPT}%{${fg[green]}%}%n: %{${fg[green]}%}%c %{${fg[green]}%}%# "
+PROMPT2="%{${fg[green]}%} %_ > %{${reset_color}%}"
 RPROMPT='${vcs_info_msg_0_}'
 SPROMPT="%{${fg[red]}%}correct: %R -> %r ? [n,y,a,e] %{${reset_color}%}"
 
