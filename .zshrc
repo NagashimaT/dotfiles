@@ -9,8 +9,8 @@ setopt print_eight_bit        # Enable Japanese file name
 
 # History
 export HISTFILE=${HOME}/.zsh-history
-export HISTSIZE=1000000         # Number of saved history on memory
-export SAVEHIST=1000000         # Number of saved history
+export HISTSIZE=1000         # Number of saved history on memory
+export SAVEHIST=2000         # Number of saved history
 
 setopt hist_ignore_dups       # Ignore duplicated history
 setopt hist_ignore_space      # Ignore command starts with white spaces
@@ -36,7 +36,7 @@ alias gpush='git push'
 
 #ls
 if [ $(uname) = 'Darwin' ]; then
-  export LSCOLORS=gxfxcxdxbxegedabagacad
+  export LSCOLORS=Cxfxcxdxbxegedabagacad
   alias ls='ls -G'
   alias la='ls -a'
   alias ll='ls -alh'
@@ -81,8 +81,19 @@ if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
 fi
 
+# enable auto-suggestions based on the history
+if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+    # change suggestion color
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+fi
+
 # Completion
-autoload -Uz compinit && compinit -u
+autoload -Uz compinit
+compinit -d ~/.cache/zcompdump
+
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
 setopt auto_menu              # Toggle complement candidates using TAB
 setopt auto_param_slash       # Insert / after a complemented directory name
@@ -118,3 +129,4 @@ if [ -e /usr/local/opt/asdf/asdf.sh ]; then
   # Do not use `. $(brew --prefix asdf)/asdf.sh` due to performance issues.
   . /usr/local/opt/asdf/asdf.sh
 fi
+
