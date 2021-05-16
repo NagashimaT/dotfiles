@@ -128,6 +128,11 @@ if [ ${SSH_CLIENT:-undefined} = "undefined" ] && [ ${SSH_CONECTION:-undefined} =
     REMOTE_PROMPT="%F{red}[REMOTE]%f "
 fi
 
+# direnv
+if type "direnv" > /dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
 # asdf
 if [ -e /usr/local/opt/asdf/asdf.sh ]; then
   # Do not use `. $(brew --prefix asdf)/asdf.sh` due to performance issues.
